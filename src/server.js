@@ -4,8 +4,8 @@ import cors from 'cors';
 import { logger } from './middleware/logger.js';
 import { connectMongoDB } from './db/connectMongoDB.js';
 import notesRouter from './routes/notesRoutes.js';
-import notFoundHandler from './middleware/notFoundHandler.js';
-import errorHandler from './middleware/errorHandler.js';
+import { notFoundHandler } from './middleware/notFoundHandler.js';
+import { errorHandler } from './middleware/errorHandler.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -13,14 +13,14 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(cors());
 app.use(logger);
-app.use('/notes', notesRouter);
+app.use(notesRouter);
 app.use(notFoundHandler);
 app.use(errorHandler);
 
 const start = async () => {
+  await connectMongoDB();
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
   });
-  await connectMongoDB();
 };
 start();
