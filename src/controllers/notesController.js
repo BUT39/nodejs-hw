@@ -3,17 +3,16 @@ import { Note } from '../models/note.js';
 
 export const getNote = async (req, res) => {
   const { page = 1, perPage = 10, search, tag } = req.query;
-  const query = await Note.find();
+
+  const query = Note.find();
 
   if (tag) query.where({ tag });
 
   if (search) {
     query.where({
       $or: [
-        {
-          text: { $regex: search, $options: 'i' },
-          content: { $regex: search, $options: 'i' },
-        },
+        { title: { $regex: search, $options: 'i' } },
+        { content: { $regex: search, $options: 'i' } },
       ],
     });
   }
