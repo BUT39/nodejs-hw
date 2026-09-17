@@ -18,9 +18,14 @@ const noteSchema = new mongoose.Schema(
       enum: TAGS,
       default: TAGS[0],
     },
+    userId: {
+      tupe: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
   },
   { timestamps: true },
 );
-noteSchema.index({ tag: 1 });
+noteSchema.index({ tag: 1, userId: 1 });
 
 export const Note = mongoose.model('Note', noteSchema);
