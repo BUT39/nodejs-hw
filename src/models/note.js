@@ -19,7 +19,7 @@ const noteSchema = new mongoose.Schema(
       default: TAGS[0],
     },
     userId: {
-      tupe: mongoose.Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
       required: true,
     },
